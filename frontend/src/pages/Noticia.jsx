@@ -1,0 +1,1 @@
+export default function Noticia() { return <div>Notícia Individual</div> }

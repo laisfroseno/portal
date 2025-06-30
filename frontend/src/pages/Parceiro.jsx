@@ -1,0 +1,1 @@
+export default function Parceiro() { return <div>Quero ser um Parceiro</div> }
