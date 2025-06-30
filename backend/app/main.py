@@ -12,5 +12,16 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# Rotas dos módulos
 app.include_router(noticias.router)
 app.include_router(patrocinadores.router)
+
+# Rota raiz ("/")
+@app.get("/")
+def index():
+    return {"message": "API do Portal de Notícias"}
+
+# Rota de saúde ("/health")
+@app.get("/health")
+def health_check():
+    return {"status": "ok"}
