@@ -3,24 +3,59 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Portal de Notícias</title>
+    <title>Portal de Notícias Ambientais</title>
     <link rel="icon" href="/favicon.ico" />
+    <!-- Adicionando o link para o TailwindCSS, se necessário -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   </head>
   <body class="bg-gray-100 text-gray-900">
-    <!-- Logo superior -->
-    <header class="w-full p-4 flex justify-start items-center shadow-md bg-white">
+    <!-- Cabeçalho fixo -->
+    <header class="w-full p-4 flex justify-between items-center shadow-md bg-green-600 text-white">
       <img src="/logo.png" alt="Logo" class="h-10" />
+      <button id="menu-toggle" class="text-2xl lg:hidden">☰</button>
     </header>
 
+    <!-- Menu lateral para navegação -->
+    <div id="sidebar" class="lg:hidden fixed top-0 left-0 w-3/4 h-full bg-white shadow-lg transform -translate-x-full transition-transform duration-300">
+      <div class="p-4">
+        <button id="close-menu" class="text-xl font-bold text-green-600">✖ Fechar</button>
+        <ul class="flex flex-col gap-4 mt-4">
+          <li><a href="/" class="text-xl">Home</a></li>
+          <li><a href="/quemsomos" class="text-xl">Quem Somos</a></li>
+          <li><a href="/faleconosco" class="text-xl">Fale Conosco</a></li>
+          <li><a href="/parceiro" class="text-xl">Parceiro</a></li>
+          <li><a href="/noticia" class="text-xl">Notícias</a></li>
+          <li><a href="/submeterreportagem" class="text-xl">Submeter Reportagem</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Conteúdo dinâmico (React) -->
     <div id="root"></div>
 
     <!-- Rodapé com patrocinadores -->
-    <footer class="w-full p-4 bg-white shadow-inner mt-4 text-center">
+    <footer class="w-full p-4 bg-green-600 shadow-inner mt-4 text-center text-white">
       <div class="flex flex-wrap justify-center items-center gap-4">
         <img src="/patrocinador1.png" class="h-8" />
         <img src="/patrocinador2.png" class="h-8" />
         <img src="/patrocinador3.png" class="h-8" />
       </div>
     </footer>
+
+    <!-- Scripts necessários -->
+    <script>
+      // Lógica para abrir e fechar o menu lateral
+      const menuToggle = document.getElementById('menu-toggle');
+      const sidebar = document.getElementById('sidebar');
+      const closeMenu = document.getElementById('close-menu');
+
+      menuToggle.addEventListener('click', () => {
+        sidebar.style.transform = 'translateX(0)';
+      });
+
+      closeMenu.addEventListener('click', () => {
+        sidebar.style.transform = 'translateX(-100%)';
+      });
+    </script>
   </body>
 </html>

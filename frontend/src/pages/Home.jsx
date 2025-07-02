@@ -1,23 +1,28 @@
-import { useEffect, useState, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-import Header from '../components/Header'
-import Footer from '../components/Footer'
-import NoticiaCard from '../components/NoticiaCard'
-import PatrocinadoresBar from '../components/PatrocinadoresBar'
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import Header from './Header';
+import Footer from './Footer';
+import NoticiaCard from './NoticiaCard';
+import PatrocinadoresBar from './PatrocinadoresBar';
 
 export default function Home() {
-  const [noticias, setNoticias] = useState([])
-  const [menuAberto, setMenuAberto] = useState(false)
-  const navigate = useNavigate()
+  const [noticias, setNoticias] = useState([]);
+  const [patrocinadores, setPatrocinadores] = useState([]);
+  const [menuAberto, setMenuAberto] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetch('http://localhost:8000/noticias')
       .then(res => res.json())
-      .then(data => setNoticias(data))
-  }, [])
+      .then(data => setNoticias(data));
+    fetch('http://localhost:8000/patrocinadores')
+      .then(res => res.json())
+      .then(data => setPatrocinadores(data));
+  }, []);
 
   return (
     <>
+      <Header />
       <div className="flex justify-between items-center px-4 py-2 bg-white shadow-md sticky top-0 z-50">
         <img src="/logo.png" alt="Logo" className="h-10" />
         <button className="text-xl font-bold" onClick={() => setMenuAberto(!menuAberto)}>☰ Menu</button>
@@ -40,10 +45,10 @@ export default function Home() {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 animate-pulse">
           {noticias.map(n => <NoticiaCard key={n.id} noticia={n} />)}
         </div>
+        <PatrocinadoresBar patrocinadores={patrocinadores} />
       </main>
 
       <Footer />
-      <PatrocinadoresBar />
     </>
-  )
+  );
 }
