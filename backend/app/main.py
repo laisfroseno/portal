@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 from app.routes import noticias, patrocinadores
 
 app = FastAPI()
@@ -12,6 +13,9 @@ app.add_middleware(
     allow_methods=["*"],  # Permitir todos os métodos HTTP
     allow_headers=["*"],  # Permitir todos os cabeçalhos
 )
+
+# Serve arquivos estáticos (como favicon.ico)
+app.mount("/static", StaticFiles(directory="static"), name="static")
 
 # Roteamento de módulos
 app.include_router(noticias.router)

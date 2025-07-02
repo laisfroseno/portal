@@ -1,10 +1,3 @@
-import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import Header from './Header';
-import Footer from './Footer';
-import NoticiaCard from './NoticiaCard';
-import PatrocinadoresBar from './PatrocinadoresBar';
-
 export default function Home() {
   const [noticias, setNoticias] = useState([]);
   const [patrocinadores, setPatrocinadores] = useState([]);
@@ -23,30 +16,44 @@ export default function Home() {
   return (
     <>
       <Header />
-      <div className="flex justify-between items-center px-4 py-2 bg-white shadow-md sticky top-0 z-50">
-        <img src="/logo.png" alt="Logo" className="h-10" />
-        <button className="text-xl font-bold" onClick={() => setMenuAberto(!menuAberto)}>☰ Menu</button>
+      <div className="flex">
+        {/* Menu Lateral */}
+        {menuAberto && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden">
+            <div className="bg-white p-4 w-3/4 h-full">
+              <button onClick={() => setMenuAberto(false)} className="text-2xl font-bold">✖ Fechar</button>
+              <ul className="flex flex-col gap-4 mt-4">
+                <li><button onClick={() => navigate('/quemsomos')}>Quem Somos</button></li>
+                <li><button onClick={() => navigate('/faleconosco')}>Fale Conosco</button></li>
+                <li><button onClick={() => navigate('/parceiro')}>Parceiro</button></li>
+                <li><button onClick={() => navigate('/noticia')}>Notícias</button></li>
+                <li><button onClick={() => navigate('/submeterreportagem')}>Submeter Reportagem</button></li>
+              </ul>
+            </div>
+          </div>
+        )}
+
+        {/* Conteúdo Principal */}
+        <main className="flex-1 p-4">
+          <h2 className="text-2xl font-bold mb-4 text-center">📰 Últimas Notícias</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+            {noticias.map(n => <NoticiaCard key={n.id} noticia={n} />)}
+          </div>
+        </main>
+
+        {/* Barra de Patrocinadores */}
+        <aside className="w-1/4 p-4 bg-gray-200">
+          <h3 className="text-lg font-bold mb-2">Patrocinadores</h3>
+          <div className="space-y-4">
+            {patrocinadores.map(patrocinador => (
+              <div key={patrocinador.id} className="flex items-center gap-2">
+                <img src={patrocinador.logo_url} alt={patrocinador.nome} className="h-12" />
+                <a href={patrocinador.link} target="_blank" className="text-blue-600">{patrocinador.nome}</a>
+              </div>
+            ))}
+          </div>
+        </aside>
       </div>
-
-      {menuAberto && (
-        <div className="absolute right-4 bg-white border shadow-md rounded-md p-4 z-50">
-          <ul className="flex flex-col gap-2">
-            <li><button onClick={() => navigate('/quemsomos')}>Quem Somos</button></li>
-            <li><button onClick={() => navigate('/faleconosco')}>Fale Conosco</button></li>
-            <li><button onClick={() => navigate('/parceiro')}>Parceiro</button></li>
-            <li><button onClick={() => navigate('/noticia')}>Notícias</button></li>
-            <li><button onClick={() => navigate('/submeterreportagem')}>Submeter Reportagem</button></li>
-          </ul>
-        </div>
-      )}
-
-      <main className="p-4">
-        <h2 className="text-2xl font-bold mb-4 text-center">📰 Últimas Notícias</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 animate-pulse">
-          {noticias.map(n => <NoticiaCard key={n.id} noticia={n} />)}
-        </div>
-        <PatrocinadoresBar patrocinadores={patrocinadores} />
-      </main>
 
       <Footer />
     </>

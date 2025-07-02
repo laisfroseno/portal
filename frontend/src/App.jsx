@@ -1,10 +1,10 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import Home from './pages/Home'
-import FaleConosco from './pages/FaleConosco'
-import QuemSomos from './pages/QuemSomos'
-import Parceiro from './pages/Parceiro'
-import Noticia from './pages/Noticia'
-import SubmeterReportagem from './pages/SubmeterReportagem'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Home from './pages/Home';
+import FaleConosco from './pages/FaleConosco';
+import QuemSomos from './pages/QuemSomos';
+import Parceiro from './pages/Parceiro';
+import Noticia from './pages/Noticia';
+import SubmeterReportagem from './pages/SubmeterReportagem';
 
 export default function App() {
   return (
@@ -18,5 +18,5 @@ export default function App() {
         <Route path="/submeterreportagem" element={<SubmeterReportagem />} />
       </Routes>
     </Router>
-  )
+  );
 }
