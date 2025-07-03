@@ -1,21 +1,28 @@
+import os
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
 from app.routes import noticias, patrocinadores
 
 app = FastAPI()
 
-# Configuração do CORS para permitir requisições de qualquer origem
+# Configurações de CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Permitir requisições de qualquer origem
+    allow_origins=["*"],  # Permitir todas as origens (ajuste conforme necessário)
     allow_credentials=True,
-    allow_methods=["*"],  # Permitir todos os métodos HTTP
+    allow_methods=["*"],  # Permitir todos os métodos (GET, POST, etc.)
     allow_headers=["*"],  # Permitir todos os cabeçalhos
 )
 
 # Serve arquivos estáticos (como favicon.ico)
-app.mount("/static", StaticFiles(directory="static"), name="static")
+static_dir = os.path.join(os.path.dirname(__file__), "static")
+app.mount("/static", StaticFiles(directory=static_dir), name="static")
+
+@app.get("/favicon.ico")
+async def favicon():
+    return FileResponse(os.path.join(static_dir, "favicon.ico"))
 
 # Roteamento de módulos
 app.include_router(noticias.router)
